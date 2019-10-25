@@ -17,7 +17,7 @@ class ApiWorkflowClient(object):
     
     def __init__(self, base_url, token, sleep_seconds=2, timeout_seconds=sys.maxsize, timeout_func=_default_timeout_func, verbose=True):
         """
-        :param base_url: Base URL of API such as https://demo.cloud.databricks.com/api/2.0
+        :param base_url: Base URL of API such as https://acme.cloud.databricks.com/api/2.0
         :param token: API token
         :param sleep_seconds: Seconds to sleep when polling for cluster readiness
         :param timeout_seconds: Timeout in seconds

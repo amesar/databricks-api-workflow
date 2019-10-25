@@ -1,7 +1,7 @@
 {
   "name": "workflowApiClient_run_job",
   "new_cluster": {
-    "spark_version": "5.0.x-scala2.11",
+    "spark_version": "6.1.x-scala2.11",
     "node_type_id": "i3.xlarge",
     "num_workers": 1,
     "driver_node_type_id": "i3.xlarge",
@@ -12,9 +12,9 @@
     }
   },
   "email_notifications": {
-    "on_start": ["andre@databricks.com"],
-    "on_success": ["andre@databricks.com"],
-    "on_failure": ["andre@databricks.com"]
+    "on_start": ["john.doe@acme.com"],
+    "on_success": ["john.doe@acme.com"],
+    "on_failure": ["john.doe@acme.com"]
   },
   "libraries": [
     {

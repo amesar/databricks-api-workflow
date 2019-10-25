@@ -10,7 +10,7 @@ class ApiClient(object):
 
     def __init__(self, base_url, token):
         """
-        :param base_url: Base URL of API such as https://demo.cloud.databricks.com/api/2.0
+        :param base_url: Base URL of API such as https://acme.cloud.databricks.com/api/2.0
         :param token: API token
         """
         self.base_url = base_url
