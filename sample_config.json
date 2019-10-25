@@ -1,0 +1,4 @@
+{
+  "cluster_noninit_states" : [ "RUNNING", "TERMINATED", "ERROR", "UNKNOWN" ],
+  "run_terminal_states" : [ "TERMINATED", "SKIPPED", "INTERNAL_ERROR" ]
+}
