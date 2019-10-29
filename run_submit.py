@@ -38,8 +38,11 @@ def run(url,token,request_file,sleep_seconds,params):
     #log_print("get_run.response.2:\n {}\n".format(json.dumps(dct, indent=2)))
 
     # Get cluster log directory
-    log_dir = dct['cluster_spec']['new_cluster']['cluster_log_conf']['dbfs']['destination'] + '/' + cluster_id
-    log_print("log_dir: {}\n".format(log_dir))
+    try:
+        log_dir = dct['cluster_spec']['new_cluster']['cluster_log_conf']['dbfs']['destination'] + '/' + cluster_id
+        log_print("log_dir: {}\n".format(log_dir))
+    except KeyError as e:
+        pass
 
 if __name__ == "__main__":
     try:
