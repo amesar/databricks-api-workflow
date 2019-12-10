@@ -28,12 +28,9 @@ Synopsis
 
 Run
 ```
-url=https://acme.cloud.databricks.com/api/2.0
-token=MY_TOKEN
-file=runs_submit.json
-sleep_seconds=3
-
-python run_submit.py -u $url -t $token -f $file -s $sleep_seconds param1 param2
+python -u run_submit.py --url https://acme.cloud.databricks.com/api/2.0 \
+  --token MY_TOKEN --json_file runs_submit.json --sleep_seconds 3 \
+  param1 param2
 
 2019-01-02 23:41:57 Processing time: 4.82 seconds
 2019-01-02 23:41:58 cluster_id: 0102-234154-bud180
@@ -67,13 +64,9 @@ Synopsis
 Run
 
 ```
-
-url=https://acme.cloud.databricks.com/api/2.0
-token=MY_TOKEN
-job_id=1812
-sleep_seconds=3
-
-python job_run.py $url $token $job_id $sleep_seconds param1 param2
+python -u run_job.py --url https://acme.cloud.databricks.com/api/2.0 \
+  --token MY_TOKEN --job_id 1812 --sleep_seconds 3 \
+  param1 param2
 
 2019-01-03 00:35:58 url: https://demo.cloud.databricks.com/api/2.0
 2019-01-03 00:35:58 job_id: 11926
@@ -102,13 +95,13 @@ cd sample_jar
 
 sbt package
 
-curl -X POST -H "Authorization: Bearer MY_TOKEN" \
-  -F contents=@target/scala-2.11/amm-hellofelidae_2.11-0.1-SNAPSHOT.jar \
-  -F path=dbfs:/andre/jars/amm-hellofelidae_2.11-0.1-SNAPSHOT.jar \
-  -F overwrite=true https://demo.cloud.databricks.com/api/2.0/dbfs/put
+databricks fs cp \
+  target/scala-2.11/amm-hellofelidae_2.11-0.1-SNAPSHOT.jar \
+  dbfs:/andre/jars \
+  --overwrite
 ```
 
-To test the jar locally:
+To test the jar locally.
 ```
 spark-submit --class org.andre.HelloFelidae --master local[2] \
   target/scala-2.11/amm-hellofelidae_2.11-0.1-SNAPSHOT.jar \
