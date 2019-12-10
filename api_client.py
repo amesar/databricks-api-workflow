@@ -1,7 +1,8 @@
 import sys
 import json
 import requests
-from util import log_print
+import logging
+import utils
 
 class ApiClient(object):
     """ 
@@ -15,7 +16,7 @@ class ApiClient(object):
         """
         self.base_url = base_url
         self.token = token
-        log_print("base_url: {}\n".format(base_url))
+        logging.info("base_url: {}".format(base_url))
 
     def _mk_url(self, resource):
         return self.base_url + "/" + resource
@@ -33,7 +34,7 @@ class ApiClient(object):
         if rsp.status_code == 404:
             return None
         self._check_response(rsp, url)
-        #log_print("GET: {}\n".format(rsp.text))
+        #logging.info("GET: {}".format(rsp.text))
         return json.loads(rsp.text)
 
     def post(self, resource, data):

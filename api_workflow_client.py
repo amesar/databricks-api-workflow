@@ -2,10 +2,11 @@ import sys
 import os
 import time
 import json
+import logging
 from api_client import ApiClient
-from util import log_print
+import utils
 
-log_print("Python version: {}\n".format(sys.version))
+logging.info("Python version: {}".format(sys.version))
 
 class ApiWorkflowClient(object):
     """ 
@@ -30,7 +31,7 @@ class ApiWorkflowClient(object):
         self.verbose = verbose
         config_file = "config.json"
         if os.path.exists(config_file):
-            log_print("Reading config file {}\n".format(config_file))
+            logging.info("Reading config file {}".format(config_file))
             with open(config_file, 'rb') as f:
                 dct = json.loads(f.read())
             self.cluster_noninit_states = set(dct['cluster_noninit_states'])
@@ -38,8 +39,8 @@ class ApiWorkflowClient(object):
         else:
             self.cluster_noninit_states = { "RUNNING", "TERMINATED", "ERROR", "UNKNOWN" }
             self.run_terminal_states = { "TERMINATED", "SKIPPED", "INTERNAL_ERROR" }
-        log_print("cluster_noninit_states: {}\n".format(self.cluster_noninit_states))
-        log_print("run_terminal_states: {}\n".format(self.run_terminal_states))
+        logging.info("cluster_noninit_states: {}".format(self.cluster_noninit_states))
+        logging.info("run_terminal_states: {}".format(self.run_terminal_states))
 
     def __repr__(self):
         return "[base_url={} token={} sleep_seconds={}]".format(self.base_url,self.token,self.sleep_seconds)
@@ -60,7 +61,7 @@ class ApiWorkflowClient(object):
     def get_cluster_state(self, cluster_id):
         """ Return cluster state for cluster_id. """
         dct = self.api_client.get_cluster(cluster_id)
-        log_print("    cluster_id: {} is in {} state\n".format(cluster_id, dct["state"]))
+        logging.info("    cluster_id: {} is in {} state".format(cluster_id, dct["state"]))
         return dct["state"]
     
     def start_cluster(self, cluster_id):
@@ -136,15 +137,15 @@ class ApiWorkflowClient(object):
     def _wait_until(self, funk, obj_id, init_msg):
         idx = 0
         start = time.time()
-        if self.verbose: log_print("{}\n".format(init_msg))
+        if self.verbose: logging.info("{}".format(init_msg))
         while True:
             if time.time()-start > self.timeout_seconds:
                 self.timeout_func(self)
             (res,msg,dct) = funk(obj_id)
             time.sleep(self.sleep_seconds)
-            if self.verbose: log_print("{}\n".format(msg))
+            if self.verbose: logging.info("{}".format(msg))
             if res: break
             idx += 1
         nsecs = time.time()-start
-        log_print("Processing time: {0:.2f} seconds\n".format(nsecs))
+        logging.info("Processing time: {0:.2f} seconds".format(nsecs))
         return dct
