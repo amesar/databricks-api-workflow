@@ -38,7 +38,7 @@ if __name__ == "__main__":
         print("params:",params)
         run(args.url, args.token, args.job_id, args.sleep_seconds, args.timeout_seconds, params)
         sys.exit(0)
-    except Exception,e:
+    except Exception as e:
         traceback.print_exc()
         logging.error("ERROR: {}".format(e))
         sys.exit(1)
