@@ -25,6 +25,7 @@ class ApiWorkflowClient(object):
         :param verbose: To be verbose or not?
         """
         self.api_client = ApiClient(base_url, token)
+        self.base_url = base_url
         self.sleep_seconds = sleep_seconds
         self.timeout_seconds = timeout_seconds
         self.timeout_func = timeout_func
@@ -43,7 +44,7 @@ class ApiWorkflowClient(object):
         logging.info("run_terminal_states: {}".format(self.run_terminal_states))
 
     def __repr__(self):
-        return "[base_url={} token={} sleep_seconds={}]".format(self.base_url,self.token,self.sleep_seconds)
+        return "[base_url={} sleep_seconds={}]".format(self.base_url, self.sleep_seconds)
     
     
     def _mk_url(self, resource):
