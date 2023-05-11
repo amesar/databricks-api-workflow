@@ -100,6 +100,8 @@ python -u run_job.py \
 A simple jar is provided for testing. Build the jar and push it to dbfs.
 See [sample_jar](sample_jar) and [HelloFelidae.scala](sample_jar/src/main/scala/org/andre/HelloFelidae.scala).
 
+### Build with sbt
+
 ```
 cd sample_jar
 
@@ -107,14 +109,39 @@ sbt package
 
 databricks fs cp \
   target/scala-2.11/amm-hellofelidae_2.11-0.1-SNAPSHOT.jar \
-  dbfs:/andre/jars \
-  --overwrite
+  dbfs:/andre/jars --overwrite
 ```
 
 To test the jar locally.
 ```
 spark-submit --class org.andre.HelloFelidae --master local[2] \
   target/scala-2.11/amm-hellofelidae_2.11-0.1-SNAPSHOT.jar \
+  tiger
+
++---+--------------+
+| id|          name|
++---+--------------+
+|200|Sumatran tiger|
+|201|    Amur tiger|
+|202|  Bengal tiger|
++---+--------------+
+```
+
+### Build with maven
+```
+cd sample_jar
+
+mvn clean package
+
+databricks fs cp \
+  target/amm-HelloFelidae-1.0-SNAPSHOT.jar \
+  dbfs:/andre/jars --overwrite
+```
+
+To test the jar locally.
+```
+spark-submit --class org.andre.HelloFelidae --master local[2] \
+  target/amm-HelloFelidae-1.0-SNAPSHOT.jar \
   tiger
 
 +---+--------------+
